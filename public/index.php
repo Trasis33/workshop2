@@ -29,6 +29,7 @@ ini_set('display_errors', 'On');
 $router = new Core\Router();
 
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
+$router->add('login', ['controller' => 'Home', 'action' => 'create']);
 $router->add('{controller}/{action}');
 $router->add('{controller}/{id:\d+}/{action}');
 

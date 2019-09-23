@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use \Core\View;
+use \App\Model\User;
 
 
 class Home extends \Core\Controller
@@ -27,5 +28,10 @@ class Home extends \Core\Controller
       'isLoggedIn'  => false,
       'dateTime'    => $dateTime
     ]);
+  }
+  public function createAction()
+  {
+    $user = User::findByUsername($_POST['name']);
+    var_dump($user);
   }
 }
