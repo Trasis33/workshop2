@@ -23,7 +23,7 @@ class View
 
     if ($twig === null) {
       $loader = new \Twig\Loader\FilesystemLoader('../App/View');
-      $twig = new \Twig_Environment($loader);
+      $twig = new \Twig\Environment($loader);
     }
     echo $twig->render($template, $args);
   }
