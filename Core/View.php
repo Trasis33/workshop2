@@ -19,7 +19,7 @@ class View
 
   public static function renderTemplate($template, $args = [])
   {
-    $loader = new \Twig\Loader\FilesystemLoader('../../workshop2/App/View/');
+    $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/App/View');
     $twig = new \Twig\Environment($loader);
 
     echo $twig->render($template, $args);

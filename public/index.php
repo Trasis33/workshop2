@@ -7,7 +7,7 @@
 
 // require('../Core/Router.php');
 
-require '../vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 // spl_autoload_register(function ($class) {
 //   $root = dirname(__DIR__);
