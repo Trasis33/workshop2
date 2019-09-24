@@ -1,7 +1,5 @@
 <?php
 
-namespace App\View;
-
 class DateTimeView {
 
 
