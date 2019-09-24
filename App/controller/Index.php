@@ -6,7 +6,7 @@ use \Core\View;
 use \App\Model\User;
 
 
-class Home extends \Core\Controller
+class Index extends \Core\Controller
 {
 
   protected function before()
@@ -22,12 +22,13 @@ class Home extends \Core\Controller
   public function indexAction()
   {
     // View::render('Home/index.php');
-    $dateTime = date("l") . ', the ' . date("jS") . ' of ' . date("F Y") . ', The time is ';
 
-    View::render('Home/index.php', [
-      'isLoggedIn'  => false,
-      'dateTime'    => $dateTime
-    ]);
+    // $dateTime = date("l") . ', the ' . date("jS") . ' of ' . date("F Y") . ', The time is ';
+
+    // View::render('/App/View/LayoutView.php', [
+    //   'isLoggedIn'  => false,
+    //   'dateTime'    => $dateTime
+    // ]);
   }
   public function createAction()
   {

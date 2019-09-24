@@ -1,11 +1,11 @@
 <?php
 
 //INCLUDE THE FILES NEEDED...
-// require_once('../App/view/LoginView.php');
-// require_once('../App/view/DateTimeView.php');
-// require_once('../App/view/LayoutView.php');
+require_once('../workshop2/App/View/LoginView.php');
+require_once('../workshop2/App/view/DateTimeView.php');
+require_once('../workshop2/App/view/LayoutView.php');
 
-// require('../Core/Router.php');
+// require('../workshop2/Core/Router.php');
 
 // require_once dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -26,14 +26,14 @@ $v = new App\View\LoginView();
 $dtv = new App\View\DateTimeView();
 $lv = new App\View\LayoutView();
 
-$router = new Core\Router();
+// $router = new Core\Router();
 
-$router->add('', ['controller' => 'Home', 'action' => 'index']);
-$router->add('login', ['controller' => 'Home', 'action' => 'create']);
-$router->add('{controller}/{action}');
-$router->add('{controller}/{id:\d+}/{action}');
+// $router->add('', ['controller' => '', 'action' => 'index']);
+// $router->add('login', ['controller' => 'Home', 'action' => 'create']);
+// $router->add('{controller}/{action}');
+// $router->add('{controller}/{id:\d+}/{action}');
 
-$router->dispatch($_SERVER['QUERY_STRING']);
+// $router->dispatch($_SERVER['QUERY_STRING']);
 
 $lv->render(false, $v, $dtv);
 
