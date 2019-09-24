@@ -24,7 +24,7 @@ class Home extends \Core\Controller
     // View::render('Home/index.php');
     $dateTime = date("l") . ', the ' . date("jS") . ' of ' . date("F Y") . ', The time is ';
 
-    View::renderTemplate('Home/index.html', [
+    View::render('Home/index.php', [
       'isLoggedIn'  => false,
       'dateTime'    => $dateTime
     ]);

@@ -4,18 +4,18 @@ namespace Core;
 
 class View
 {
-  // public static function render($view, $args = [])
-  // {
-  //   extract($args, EXTR_SKIP);
+  public static function render($view, $args = [])
+  {
+    extract($args, EXTR_SKIP);
 
-  //   $file = "../App/View/$view";
+    $file = "../App/View/$view";
 
-  //   if (is_readable($file)) {
-  //     require $file;
-  //   } else {
-  //     echo "$file not found";
-  //   }
-  // }
+    if (is_readable($file)) {
+      require $file;
+    } else {
+      echo "$file not found";
+    }
+  }
 
   public static function renderTemplate($template, $args = [])
   {

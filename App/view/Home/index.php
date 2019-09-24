@@ -1,7 +1,11 @@
-<!--
+<?php
 
+namespace App\View;
 
-<!DOCTYPE html>
+class LayoutView {
+
+  public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
+    echo '<!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
@@ -12,24 +16,21 @@
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
 
           <div class="container">
-          <form method="post" >
-				<fieldset>
-					<legend>Login - enter Username and password</legend>
-					<p id="' . self::$messageId . '">' . $message . '</p>
+              ' . $v->response() . '
 
-					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
-
-					<label for="' . self::$password . '">Password :</label>
-					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
-
-					<label for="' . self::$keep . '">Keep me logged in  :</label>
-					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
-
-					<input type="submit" name="' . self::$login . '" value="login" />
-				</fieldset>
-			</form>
               ' . $dtv->show() . '
           </div>
          </body>
-      </html> -->
+      </html>
+    ';
+  }
+
+  private function renderIsLoggedIn($isLoggedIn) {
+    if ($isLoggedIn) {
+      return '<h2>Logged in</h2>';
+    }
+    else {
+      return '<h2>Not logged in</h2>';
+    }
+  }
+}

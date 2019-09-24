@@ -7,7 +7,7 @@
 
 // require('../Core/Router.php');
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 // spl_autoload_register(function ($class) {
 //   $root = dirname(__DIR__);
@@ -22,9 +22,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
 //CREATE OBJECTS OF THE VIEWS
-// $v = new App\View\LoginView();
-// $dtv = new App\View\DateTimeView();
-// $lv = new App\View\LayoutView();
+$v = new App\View\LoginView();
+$dtv = new App\View\DateTimeView();
+$lv = new App\View\Home\LayoutView();
 
 $router = new Core\Router();
 
@@ -35,5 +35,5 @@ $router->add('{controller}/{id:\d+}/{action}');
 
 $router->dispatch($_SERVER['QUERY_STRING']);
 
-// $lv->render(false, $v, $dtv);
+$lv->render(false, $v, $dtv);
 
