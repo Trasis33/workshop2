@@ -40,9 +40,6 @@ class User extends \Core\Model
     if ($this->name == '') {
       $this->errors[] = 'Username is missing';
     }
-    if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
-      $this->errors[] = 'Invalid email';
-    }
     if ($this->password != $this->password_confirmation) {
       $this->errors[] = 'Password must match confirmation';
     }
