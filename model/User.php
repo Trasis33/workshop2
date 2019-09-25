@@ -1,16 +1,34 @@
 <?php
 
+namespace model;
+
 use PDO;
 
-class User extends \core\Model
+class User
 {
+  private static $SESSION_KEY =  __CLASS__ .  "::Username";
+  private static $SESSION_LOGGED_IN =  __CLASS__ .  "::IsLoggedIn";
+
   public $errors = [];
 
-  public function __construct($data) {
+  public function __construct($data = []) {
     foreach ($data as $key => $value) {
       $this->$key = $value;
     }
   }
+
+  public function hasStoredUser () : bool {
+    if (isset($_SESSION[self::$SESSION_KEY])) {
+			return true;
+		} else {
+      return false;
+    }
+  }
+
+  public function getIsLoggedIn()
+	{
+		return isset($_SESSION[self::$SESSION_LOGGED_IN]);
+	}
 
   public function save() {
 

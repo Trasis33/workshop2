@@ -25,10 +25,10 @@ abstract class Model
     if ($db === null) {
 
       try {
-        $dsn = 'mysql:host=' . Config::DB_HOST . ';dbname=' .
-        Config::DB_NAME . ';charset=utf8';
+        $dsn = 'mysql:host=' . $this->conf::DB_HOST . ';dbname=' .
+        $this->conf::DB_NAME . ';charset=utf8';
 
-        $db = new PDO($dsn, Config::DB_USER, COnfig::DB_PASS);
+        $db = new PDO($dsn, $this->conf::DB_USER, $this->conf::DB_PASS);
 
         return $db;
 

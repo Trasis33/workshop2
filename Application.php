@@ -7,6 +7,8 @@ require_once('view/RegisterView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
 
+require_once('model/User.php');
+
 class Application
 {
   private $loginView;
@@ -14,12 +16,18 @@ class Application
   private $dateTimeView;
   private $layoutView;
 
+  private $storage;
+  private $isLoggedIn;
+
   public function __construct()
   {
-    $this->loginView = new LoginView();
-    $this->registerView = new RegisterView();
-    $this->dateTimeView = new DateTimeView();
-    $this->layoutView = new LayoutView();
+    $this->storage = new \model\User();
+
+    $this->loginView = new \view\LoginView($this->storage);
+    $this->registerView = new \view\RegisterView();
+    $this->dateTimeView = new \view\DateTimeView();
+    $this->layoutView = new \view\LayoutView();
+
   }
   //CREATE OBJECTS OF THE VIEWS
   // $v = new LoginView();
@@ -28,10 +36,17 @@ class Application
 
   public function run()
   {
-    if ($this->layoutView->userHasClickedRegister()) {
-      $this->layoutView->render(false, $this->registerView, $this->dateTimeView);
-    } else {
-      $this->layoutView->render(false, $this->loginView, $this->dateTimeView);
-    }
+    $this->changeState();
+    $this->output();
+  }
+  private function changeState() {
+
+    $this->isLoggedIn = $this->storage->getIsLoggedIn();
+    $this->layoutView->userHasClickedRegister();
+    $this->loginView->ifUserWantsToLogin();
+
+  }
+  private function output() {
+    $this->layoutView->render($this->isLoggedIn, $this->loginView, $this->dateTimeView);
   }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace view;
+
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -12,6 +14,12 @@ class LoginView {
 
   private $message;
 
+  private $storage;
+
+	public function __construct(\model\User $storage)
+	{
+		$this->storage = $storage;
+	}
 
 	/**
 	 * Create HTTP response
@@ -29,6 +37,10 @@ class LoginView {
     }
     return $response;
 	}
+
+  public function setMessage($message) {
+    $this->message = $message;
+  }
 
 	/**
 	* Generate HTML code on the output buffer for the logout button
@@ -74,26 +86,26 @@ class LoginView {
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 
   private function fieldHasUsername () : bool {
-		return isset($_POST[self::$name]) && !empty($_POST[self::$name]);
+		return !empty($_POST[self::$name]);
 	}
 	private function fieldHasPassword () : bool {
-		return isset($_POST[self::$password]) && !empty($_POST[self::$password]);
+		return !empty($_POST[self::$password]);
 	}
 	private function userWantsToLogin () : bool {
-		return isset($_POST[self::$login]);
+    return isset($_POST[self::$login]) && !$this->storage->hasStoredUser();
   }
 
   private function messageIfFieldsAreEmpty() {
     if ($this->userWantsToLogin()) {
-      if (!$this->fieldHasUsername()) {
-        $this->setMessage("Username is missing");
-      }
       if(!$this->fieldHasPassword()) {
         $this->setMessage("Password is missing");
       }
+      if (!$this->fieldHasUsername()) {
+        $this->setMessage("Username is missing");
+      }
     }
   }
-
+    // fortsätt här!!!!!!!!!!!
   public function ifUserWantsToLogin() : bool {
     $this->messageIfFieldsAreEmpty();
 
@@ -101,9 +113,5 @@ class LoginView {
       return true;
     }
     return false;
-  }
-
-  public function setMessage($message) {
-    $this->message = $message;
   }
 }
