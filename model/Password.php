@@ -32,7 +32,7 @@ class Password
 
   private function passwordTooShortHandler(string $password) {
     if ($this->isPasswordTooShort($password)) {
-      throw new Exception("Password has too few characters, at least " . self::MIN_PASSWORD_LENGTH . " characters.")
+      throw new Exception("Password has too few characters, at least " . self::MIN_PASSWORD_LENGTH . " characters.");
     }
   }
 }
