@@ -105,7 +105,7 @@ class LoginView {
       }
     }
   }
-    // fortsätt här!!!!!!!!!!!
+
   public function ifUserWantsToLogin() : bool {
     $this->messageIfFieldsAreEmpty();
 

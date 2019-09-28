@@ -6,7 +6,7 @@ use PDO;
 
 class User
 {
-  private static $SESSION_KEY =  __CLASS__ .  "::Username";
+  private static $SESSION_KEY =  __CLASS__ .  "::UserName";
   private static $SESSION_LOGGED_IN =  __CLASS__ .  "::IsLoggedIn";
 
   public $errors = [];
@@ -79,6 +79,8 @@ class User
     $db = static::getDB();
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+
+    $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
     $stmt->execute();
 

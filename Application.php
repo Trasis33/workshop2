@@ -47,6 +47,11 @@ class Application
 
   }
   private function output() {
-    $this->layoutView->render($this->isLoggedIn, $this->loginView, $this->dateTimeView);
+    if($this->layoutView->userHasClickedRegister())
+    {
+      return $this->layoutView->render($this->isLoggedIn, $this->registerView, $this->dateTimeView);
+
+    }
+    return $this->layoutView->render($this->isLoggedIn, $this->loginView, $this->dateTimeView);
   }
 }

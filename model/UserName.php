@@ -2,31 +2,42 @@
 
 namespace model;
 
-class UserName
+use Exception;
+
+class Username
 {
   const MIN_NAME_LENGTH = 3;
-  private $name = null;
+  private $username = null;
 
-  public function __construct(string $newName) {
+  public function __construct(string $username) {
+    $this->usernameTooShortHandler($username);
 
-    $this->name = $this->applyFilter($newName);
-
-		if (strlen($this->name) < self::$minNameLength) {
-			throw new TooShortNameException();
-		}
+    $this->username = $username;
   }
 
-  public function setName(UserName $newName) {
-		$this->name = $newName->getUserName();
+  public function setUsername(string $username) {
+		$this->username = $username;
 	}
 	public function getUserName() {
-		return $this->name;
+		return $this->username;
 	}
 	public function hasUserName() : bool {
-		return $this->name != null;
-	}
+		return $this->username != null;
+  }
 
-  public static function applyFilter(string $rawInput) : string {
-		return trim(htmlentities($rawInput));
-	}
+  private function isUsernameTooShort(string $username)
+  {
+    if (empty($username) || strlen($username) < self::MIN_NAME_LENGTH)
+    {
+      return true;
+    }
+    return false;
+  }
+
+  private function usernameTooShortHandler(string $username)
+  {
+    if ($this->isUsernameTooShort($username)) {
+      throw new Exception("Username has too few characters, at least " . self::MIN_NAME_LENGTH . " characters.");
+    }
+  }
 }

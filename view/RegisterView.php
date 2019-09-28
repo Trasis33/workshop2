@@ -13,14 +13,14 @@ class RegisterView
 
   public function response($isLoggedIn)
   {
-    $response = $this->generateRegisterFormHTML(self::$msg);
+    $response = $this->generateRegistrationFormHTML(self::$msg);
     return $response;
   }
 
-  public function generateRegisterFormHTML()
+  public function generateRegistrationFormHTML()
   {
     return '<h2>Register new user</h2>
-    <form action="?register" method="post" enctype="multipart/form-data">
+    <form action="?register" method="post">
       <fieldset>
         <legend>Register a new user - Write username and password</legend>
           <p id="' . self::$message . '"> ' . self::$msg . ' </p>
@@ -39,8 +39,28 @@ class RegisterView
       ';
   }
 
+  public function getUsername() {
+		return $_POST[self::$name];
+  }
+
+	public function getPassword() {
+		return $_POST[self::$password];
+  }
+
+	public function getPasswordRepeat() {
+		return $_POST[self::$passwordRepeat];
+  }
+
+  public function checkIfPasswordsMatch() {
+		return $this->getPassword() == $this->getPasswordRepeat();
+  }
+
+  public function setMessage($message) {
+		$this->msg = $message;
+	}
+
   public function ifUserWantsToRegister()
   {
-    return isset($_GET['register']);
+    return isset($_POST[self::$register]);
   }
 }
