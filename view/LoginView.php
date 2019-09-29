@@ -14,11 +14,8 @@ class LoginView {
 
   private $message;
 
-  private $storage;
-
-	public function __construct(\model\User $storage)
+	public function __construct()
 	{
-		$this->storage = $storage;
 	}
 
 	/**
@@ -38,7 +35,8 @@ class LoginView {
     return $response;
 	}
 
-  public function setMessage($message) {
+  public function setMessage($message)
+  {
     $this->message = $message;
   }
 
@@ -85,33 +83,89 @@ class LoginView {
 
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 
-  private function fieldHasUsername () : bool {
-		return !empty($_POST[self::$name]);
-	}
-	private function fieldHasPassword () : bool {
-		return !empty($_POST[self::$password]);
-	}
-	private function userWantsToLogin () : bool {
-    return isset($_POST[self::$login]) && !$this->storage->hasStoredUser();
+  private function fieldHasUsername()
+  {
+		return isset($_POST[self::$name]) && !empty($_POST[self::$name]);
   }
 
-  private function messageIfFieldsAreEmpty() {
-    if ($this->userWantsToLogin()) {
-      if(!$this->fieldHasPassword()) {
-        $this->setMessage("Password is missing");
-      }
-      if (!$this->fieldHasUsername()) {
-        $this->setMessage("Username is missing");
-      }
+  private function fieldHasPassword()
+  {
+		return isset($_POST[self::$password]) && !empty($_POST[self::$password]);
+  }
+
+  public function getUserName()
+  {
+		return $_POST[self::$name];
+	}
+
+  public function getPassword()
+  {
+		return $_POST[self::$password];
+  }
+
+  public function getKeepLoggedIn() : bool
+  {
+		return isset($_POST[self::$keep]);
+  }
+
+  private function userPressedLogin()
+  {
+		return isset($_POST[self::$login]);
+  }
+
+  private function userPressedLogout()
+  {
+		return isset($_POST[self::$logout]);
+	}
+
+  private function messageIfFieldsAreEmpty()
+  {
+    if(!$this->fieldHasPassword())
+    {
+      $this->setMessage("Password is missing");
+    }
+    if(!$this->fieldHasUsername())
+    {
+      $this->setMessage("Username is missing");
     }
   }
 
-  public function ifUserWantsToLogin() : bool {
-    $this->messageIfFieldsAreEmpty();
+  public function ifUserWantsToLogin()
+  {
+    if($this->userPressedLogin())
+    {
+      $this->messageIfFieldsAreEmpty();
+    }
 
-    if ($this->userWantsToLogin() && $this->fieldHasUsername() && $this->fieldHasPassword()) {
+    if ($this->userPressedLogin() && $this->fieldHasUsername() && $this->fieldHasPassword())
+    {
       return true;
+    } else
+    {
+      return false;
     }
-    return false;
+  }
+
+  public function ifUserWantsToLogout()
+  {
+    if($this->userPressedLogout())
+    {
+      return true;
+    } else
+    {
+      return false;
+    }
+  }
+
+  public function getUserCredentials()
+  {
+    if($this->fieldHasUsername() && $this->fieldHasPassword())
+    {
+      $username = $this->getUserName();
+      $password = $this->getPassword();
+      $keepLoggedIn = $this->getKeepLoggedIn();
+
+      return new \model\UserCredentials($username, $password, $keepLoggedIn);
+    }
   }
 }

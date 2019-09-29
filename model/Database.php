@@ -1,11 +1,11 @@
 <?php
 
-namespace core;
+namespace model;
 
 use PDO;
 use PDOException;
 
-abstract class Model
+class Database
 {
   private $conf;
 
@@ -32,7 +32,8 @@ abstract class Model
 
         return $db;
 
-      } catch (PDOException $e){
+      } catch(PDOException $e)
+      {
         echo $e->getMessage();
       }
     }

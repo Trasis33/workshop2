@@ -2,7 +2,7 @@
 
 namespace view;
 
-class LayoutView {
+class LayoutView{
 
   public function render($isLoggedIn, $v, DateTimeView $dtv) {
     echo '<!DOCTYPE html>
@@ -35,18 +35,29 @@ class LayoutView {
     }
   }
 
-  private function renderRegisterLink ($isLoggedIn) {
+  private function renderRegisterLink($isLoggedIn)
+  {
     $ret = '';
-    if (!$isLoggedIn) {
+    if(!$isLoggedIn)
+    {
       $ret = '<a href="?register">Register a new user</a>';
     }
-    if (!$isLoggedIn && $this->userHasClickedRegister()) {
-      $ret = '<a href="?">Back to login</a>';
+    if(!$isLoggedIn && $this->userHasClickedRegister())
+    {
+      $ret = '<a href="./">Back to login</a>';
     }
     return $ret;
   }
-  public function userHasClickedRegister () {
-    return isset($_GET["register"]);
+
+  public function userHasClickedRegister()
+  {
+    if(isset($_GET["register"]))
+    {
+      return true;
+    } else
+    {
+      return false;
+    }
   }
 }
 

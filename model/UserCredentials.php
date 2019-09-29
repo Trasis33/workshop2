@@ -8,20 +8,30 @@ class UserCredentials
   private $password;
   private $keepLoggedIn;
 
-  public function __construct(Username $username, Password $password, bool $keepLoggedIn)
+  public function __construct(string $username, string $password, bool $keepLoggedIn)
   {
-    $this->username = $username;
-    $this->password = $password;
+    $this->username = $this->applyFilter($username);
+    $this->password = $this->applyFilter($password);
     $this->keepLoggedIn = $keepLoggedIn;
   }
 
-  public function getUsername() {
+  public function getUsername()
+  {
     return $this->username;
   }
-  public function getPassword() {
+
+  public function getPassword()
+  {
       return $this->password;
   }
-  public function ifKeepLoggedIn() {
+
+  public function getKeepLoggedIn()
+  {
       return $this->keepLoggedIn;
+  }
+
+  public static function applyFilter(string $rawInput)
+  {
+    return trim(htmlentities($rawInput));
   }
 }
