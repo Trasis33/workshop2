@@ -2,30 +2,31 @@
 
 namespace view;
 
-class LoginView {
-	private static $login = 'LoginView::Login';
-	private static $logout = 'LoginView::Logout';
-	private static $name = 'LoginView::UserName';
-	private static $password = 'LoginView::Password';
-	private static $cookieName = 'LoginView::CookieName';
-	private static $cookiePassword = 'LoginView::CookiePassword';
-	private static $keep = 'LoginView::KeepMeLoggedIn';
-	private static $messageId = 'LoginView::Message';
+class LoginView
+{
+  private static $login = 'LoginView::Login';
+  private static $logout = 'LoginView::Logout';
+  private static $name = 'LoginView::UserName';
+  private static $password = 'LoginView::Password';
+  private static $cookieName = 'LoginView::CookieName';
+  private static $cookiePassword = 'LoginView::CookiePassword';
+  private static $keep = 'LoginView::KeepMeLoggedIn';
+  private static $messageId = 'LoginView::Message';
 
   private $message;
 
-	public function __construct()
-	{
-	}
+  public function __construct()
+  { }
 
-	/**
-	 * Create HTTP response
-	 *
-	 * Should be called after a login attempt has been determined
-	 *
-	 * @return  void BUT writes to standard output and cookies!
-	 */
-	public function response($isLoggedIn) {
+  /**
+   * Create HTTP response
+   *
+   * Should be called after a login attempt has been determined
+   *
+   * @return  void BUT writes to standard output and cookies!
+   */
+  public function response($isLoggedIn)
+  {
 
     if (!$isLoggedIn) {
       $response = $this->generateLoginFormHTML($this->message);
@@ -33,34 +34,37 @@ class LoginView {
       $response = $this->generateLogoutButtonHTML($this->message);
     }
     return $response;
-	}
+  }
 
   public function setMessage($message)
   {
     $this->message = $message;
   }
 
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
-	private function generateLogoutButtonHTML($message) {
-		return '
+  /**
+   * Generate HTML code on the output buffer for the logout button
+   * @param $message, String output message
+   * @return  void, BUT writes to standard output!
+   */
+  private function generateLogoutButtonHTML($message)
+  {
+    return '
+      <p>testing testing</p>
 			<form  method="post" >
-				<p id="' . self::$messageId . '">' . $message .'</p>
+				<p id="' . self::$messageId . '">' . $message . '</p>
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
 		';
-	}
+  }
 
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
-	private function generateLoginFormHTML($message) {
-		return '
+  /**
+   * Generate HTML code on the output buffer for the logout button
+   * @param $message, String output message
+   * @return  void, BUT writes to standard output!
+   */
+  private function generateLoginFormHTML($message)
+  {
+    return '
 			<form method="post" >
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
@@ -79,88 +83,80 @@ class LoginView {
 				</fieldset>
 			</form>
 		';
-	}
+  }
 
-	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
+  //CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 
   private function fieldHasUsername()
   {
-		return isset($_POST[self::$name]) && !empty($_POST[self::$name]);
+    return isset($_POST[self::$name]) && !empty($_POST[self::$name]);
   }
 
   private function fieldHasPassword()
   {
-		return isset($_POST[self::$password]) && !empty($_POST[self::$password]);
+    return isset($_POST[self::$password]) && !empty($_POST[self::$password]);
   }
 
   public function getUserName()
   {
-		return $_POST[self::$name];
-	}
+    return $_POST[self::$name];
+  }
 
   public function getPassword()
   {
-		return $_POST[self::$password];
+    return $_POST[self::$password];
   }
 
-  public function getKeepLoggedIn() : bool
+  public function getKeepLoggedIn(): bool
   {
-		return isset($_POST[self::$keep]);
+    return isset($_POST[self::$keep]);
   }
 
   private function userPressedLogin()
   {
-		return isset($_POST[self::$login]);
+    return isset($_POST[self::$login]);
   }
 
   private function userPressedLogout()
   {
-		return isset($_POST[self::$logout]);
-	}
+    return isset($_POST[self::$logout]);
+  }
 
   private function messageIfFieldsAreEmpty()
   {
-    if(!$this->fieldHasPassword())
-    {
+    if (!$this->fieldHasPassword()) {
       $this->setMessage("Password is missing");
     }
-    if(!$this->fieldHasUsername())
-    {
+    if (!$this->fieldHasUsername()) {
       $this->setMessage("Username is missing");
     }
   }
 
   public function ifUserWantsToLogin()
   {
-    if($this->userPressedLogin())
-    {
+    if ($this->userPressedLogin()) {
       $this->messageIfFieldsAreEmpty();
     }
 
-    if ($this->userPressedLogin() && $this->fieldHasUsername() && $this->fieldHasPassword())
-    {
+    if ($this->userPressedLogin() && $this->fieldHasUsername() && $this->fieldHasPassword()) {
       return true;
-    } else
-    {
+    } else {
       return false;
     }
   }
 
   public function ifUserWantsToLogout()
   {
-    if($this->userPressedLogout())
-    {
+    if ($this->userPressedLogout()) {
       return true;
-    } else
-    {
+    } else {
       return false;
     }
   }
 
   public function getUserCredentials()
   {
-    if($this->fieldHasUsername() && $this->fieldHasPassword())
-    {
+    if ($this->fieldHasUsername() && $this->fieldHasPassword()) {
       $username = $this->getUserName();
       $password = $this->getPassword();
       $keepLoggedIn = $this->getKeepLoggedIn();
